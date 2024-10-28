@@ -2,9 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+# todo написать еще под чб(0 255)
 def compute_histogram(image):
-
 
     if len(image.shape) == 3:
         channels = ('b', 'g', 'r')
@@ -38,4 +37,8 @@ def update_histogram_plot(line_r, line_g, line_b, histograms):
     line_g.set_ydata(histograms['g'])
     line_b.set_ydata(histograms['b'])
     plt.draw()
-    plt.pause(1)
+    plt.pause(0.000001)
+
+def display_frame_with_histogram(frame, line_r, line_g, line_b):
+    histograms = compute_histogram(frame)
+    update_histogram_plot(line_r, line_g, line_b, histograms)
