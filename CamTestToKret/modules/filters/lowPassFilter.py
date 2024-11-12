@@ -5,13 +5,13 @@ from scipy.fftpack import fft2, ifft2, fftshift
 
 def low_pass_filter_gaussian(image, kernel_size=3):
     # Применяет размытие Гаусса
-    print("gaus")
+    # print("gaus")
     filtered_image = cv2.GaussianBlur(image, (kernel_size, kernel_size), 0)
     return filtered_image
 
 def low_pass_filter_mean(image, kernel_size=5):
-    print("mean")
-    print(kernel_size)
+    # print("mean")
+    # print(kernel_size)
 
     # Среднее (боксовое) размытие
 
@@ -20,7 +20,9 @@ def low_pass_filter_mean(image, kernel_size=5):
 
 def low_pass_filter_bilateral(image, diameter=9, sigmaColor=75, sigmaSpace=75):
     # Билатеральное размытие
-    print("bil")
+    diameter = int(diameter)
+
+    # print("bil")
     filtered_image = cv2.bilateralFilter(image, diameter, sigmaColor, sigmaSpace)
     return filtered_image
 

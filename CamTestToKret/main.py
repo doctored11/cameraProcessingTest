@@ -6,6 +6,8 @@ from modules.getHist import compute_histogram, initialize_histogram_plot, update
 from modules.filters.lowPassFilter import low_pass_filter_gaussian,low_pass_filter_mean, low_pass_filter_bilateral
 from modules.cameraAppInterface import create_interface
 
+#⚠️🫐 Точка входа
+
 def main():
     create_interface()
 
