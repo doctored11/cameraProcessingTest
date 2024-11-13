@@ -13,7 +13,7 @@ class CameraApp(QtWidgets.QMainWindow):
         self.update_video()
 
     def init_camera(self):
-        self.camera = Camera(index=0, width=640, height=480)
+        self.camera = Camera(index=1, width=640, height=480)
         wait_for_camera(self.camera)
 
     # def update_video(self):
@@ -39,7 +39,8 @@ class CameraApp(QtWidgets.QMainWindow):
     def update_video(self):
         #почистить!
         frame = self.camera.get_frame()
-        processed_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        processed_frame = frame
 
 
         for filter_name, filter_data in self.ui.active_filters.items():
