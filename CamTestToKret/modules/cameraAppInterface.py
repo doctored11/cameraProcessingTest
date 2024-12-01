@@ -112,20 +112,36 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "🫐 - Camera (Test)"))
 
-    def on_filter_selected(self, filter_name):
-        print(filter_name)
-        if filter_name in filter_map:
-            filter_function, params = filter_map[filter_name]
-            filter_card, filter_inputs, checkbox = create_filter_card(filter_name, self.filter_count, filter_function,
-                                                                      params)
+    def on_filter_selected(self, filter_name, combo_box):
+        if combo_box.currentIndex() == 0:
+            return
 
-            self.active_filters[filter_name] = {'function': filter_function, 'params': filter_inputs,
-                                                'checkbox': checkbox}
+        print(f"Выбран фильтр: {filter_name}")
+
+        if filter_name in filter_map:
+            unique_filter_id = f"{filter_name}_{self.filter_count}"
+
+            filter_function, params = filter_map[filter_name]
+            filter_card, filter_inputs, checkbox = create_filter_card(
+                filter_name,
+                self.filter_count,
+                filter_function,
+                params,
+
+            )
+
+            self.active_filters[unique_filter_id] = {
+                'function': filter_function,
+                'params': filter_inputs,
+                'checkbox': checkbox,
+            }
 
             row = (self.filter_count - 1) // 3
             col = (self.filter_count - 1) % 3
             self.filter_container.addWidget(filter_card, row, col)
             self.filter_count += 1
+
+        combo_box.setCurrentIndex(0)
 
     def update_active_filters(self):
         self.active_filters = update_filter_parameters(self.active_filters)
@@ -140,3 +156,4 @@ def create_interface():
     window = CameraApp( Ui_MainWindow())
     window.show()
     sys.exit(app.exec_())
+

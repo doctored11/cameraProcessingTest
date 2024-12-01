@@ -1,5 +1,5 @@
 import cv2
-
+# ⚠️ удалите если не используется
 cap = cv2.VideoCapture('номер камеры или название')
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)

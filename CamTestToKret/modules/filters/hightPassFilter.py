@@ -27,3 +27,14 @@ def high_pass_filter_unsharp_mask(image, sigma=1.0, strength=1.5):
     blurred = cv2.GaussianBlur(image, (0, 0), sigma)
     high_pass = cv2.addWeighted(image, 1 + strength, blurred, -strength, 0)
     return high_pass
+
+
+def high_pass_filter_gradient(image, kernel_size=3):
+    # вроде его просили
+    # Градиентный фильтр: вычисляет разницу интенсивностей по строкам и столбцам, затем суммирует.
+
+    gradient_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=kernel_size)
+    gradient_y = cv2.Sobel(image, cv2.CV_64F, 0, 1,  ksize=kernel_size)
+    gradient = cv2.addWeighted(cv2.convertScaleAbs(gradient_x), 0.5,
+                               cv2.convertScaleAbs(gradient_y), 0.5, 0)
+    return gradient

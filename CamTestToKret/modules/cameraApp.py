@@ -13,7 +13,7 @@ class CameraApp(QtWidgets.QMainWindow):
         self.update_video()
 
     def init_camera(self):
-        self.camera = Camera(index=1, width=640, height=480)
+        self.camera = Camera(index=0, width=640, height=480)
         wait_for_camera(self.camera)
 
     # def update_video(self):

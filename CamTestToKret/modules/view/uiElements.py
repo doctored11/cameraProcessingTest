@@ -10,7 +10,9 @@ def create_filter_dropdown(parent, filter_names, on_change_callback):
         combo.addItem(filter_name)
         combo.addItems(filter_options[filter_name])
         combo.setStyleSheet(BUTTON_STYLE)
-        combo.currentIndexChanged.connect(lambda index, combo=combo: on_change_callback(combo.currentText()))
+        combo.currentIndexChanged.connect(
+            lambda index, combo=combo: on_change_callback(combo.itemText(index), combo)
+            )
         layout.addWidget(combo)
     return layout
 

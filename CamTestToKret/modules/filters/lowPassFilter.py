@@ -19,6 +19,7 @@ def low_pass_filter_mean(image, kernel_size=5):
     return filtered_image
 
 def low_pass_filter_bilateral(image, diameter=9, sigmaColor=75, sigmaSpace=75):
+
     # Билатеральное размытие
     diameter = int(diameter)
 
@@ -27,12 +28,14 @@ def low_pass_filter_bilateral(image, diameter=9, sigmaColor=75, sigmaSpace=75):
     return filtered_image
 
 def low_pass_filter_box(image, kernel_size=5):
+    kernel_size = int(kernel_size)
     # Прямоугольное размытие (аналогично среднему)
     filtered_image = cv2.boxFilter(image, -1, (kernel_size, kernel_size))
     return filtered_image
 
 def low_pass_filter_wiener(image, kernel_size=5):
     # Фильтр Винера
+    kernel_size = int(kernel_size)
     if image.ndim == 3:
         filtered_image = np.zeros_like(image)
         for i in range(3):
@@ -42,6 +45,7 @@ def low_pass_filter_wiener(image, kernel_size=5):
     return np.uint8(np.clip(filtered_image, 0, 255))
 
 def low_pass_filter_furie(image, cutoff=0.1):
+    cutoff = int(cutoff)
     # НЧ-фильтр на основе преобразования Фурье
     dft = fft2(image)
     dft_shift = fftshift(dft)
@@ -69,12 +73,14 @@ def low_pass_filter_furie(image, cutoff=0.1):
 
 def low_pass_filter_morf_smooth(image, kernel_size=5):
     # Морфологическое размытие с использованием закрытия
+    kernel_size = int(kernel_size)
     kernel = np.ones((kernel_size, kernel_size), np.uint8)
     filtered_image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
     return filtered_image
 
 def low_pass_filter_bessel(image, cutoff=30):
     # Применение фильтра Бесселя - аппроксимация через Гауссов фильтр (примерный метод)
+    cutoff = int(cutoff)
     bessel_kernel = cv2.getGaussianKernel(cutoff * 2 + 1, -1)
     filtered_image = cv2.sepFilter2D(image, -1, bessel_kernel, bessel_kernel)
     return filtered_image
