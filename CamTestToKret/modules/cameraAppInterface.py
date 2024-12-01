@@ -127,6 +127,7 @@ class Ui_MainWindow(object):
                 self.filter_count,
                 filter_function,
                 params,
+                lambda: self.deactivate_filter(unique_filter_id)
 
             )
 
@@ -134,6 +135,7 @@ class Ui_MainWindow(object):
                 'function': filter_function,
                 'params': filter_inputs,
                 'checkbox': checkbox,
+
             }
 
             row = (self.filter_count - 1) // 3
@@ -145,8 +147,13 @@ class Ui_MainWindow(object):
 
     def update_active_filters(self):
         self.active_filters = update_filter_parameters(self.active_filters)
+
         print("🫐 Обновленные фильтры:", self.active_filters)
 
+    def deactivate_filter(self, filter_id):
+        if filter_id in self.active_filters:
+            del self.active_filters[filter_id]
+            print(f"Фильтр {filter_id} деактивирован")
 
 
 

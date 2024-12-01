@@ -44,7 +44,7 @@ def create_update_button(parent, callback):
     update_button.clicked.connect(callback)
     return update_button
 
-def create_filter_card(filter_name, filter_count, filter_function, params):
+def create_filter_card(filter_name, filter_count, filter_function, params,deactivate_callback):
     filter_frame = QFrame()
     filter_frame.setFrameShape(QFrame.StyledPanel)
     filter_frame.setStyleSheet(FILTER_CARD_STYLE)
@@ -65,6 +65,14 @@ def create_filter_card(filter_name, filter_count, filter_function, params):
     name_label = QLabel(filter_name)
     name_label.setStyleSheet(HEADER_LABEL_STYLE)
     header_layout.addWidget(name_label)
+
+    deactivate_button = QPushButton("Отключить")
+    deactivate_button.setFixedSize(70, 20)
+    deactivate_button.setStyleSheet("border: none; color: blue; font-size: 12px;")
+    deactivate_button.clicked.connect(deactivate_callback)
+    header_layout.addWidget(deactivate_button)
+
+
     layout.addLayout(header_layout)
 
     filter_inputs = {}
@@ -73,6 +81,8 @@ def create_filter_card(filter_name, filter_count, filter_function, params):
     controls_layout.setSpacing(4)
 
     for param, value in params.items():
+        print(f'.- {param}')
+
         input_field = QLineEdit()
         input_field.setPlaceholderText(param)
         input_field.setFixedWidth(60)

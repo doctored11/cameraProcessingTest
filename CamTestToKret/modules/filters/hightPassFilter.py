@@ -38,3 +38,27 @@ def high_pass_filter_gradient(image, kernel_size=3):
     gradient = cv2.addWeighted(cv2.convertScaleAbs(gradient_x), 0.5,
                                cv2.convertScaleAbs(gradient_y), 0.5, 0)
     return gradient
+
+def high_pass_filter_laplacian_second_order(image, kernel_size=3):
+    laplacian = cv2.Laplacian(image, cv2.CV_64F, ksize=kernel_size)
+    laplacian_second_order = cv2.Laplacian(laplacian, cv2.CV_64F, ksize=kernel_size)
+    return cv2.convertScaleAbs(laplacian_second_order)
+
+
+
+def high_pass_filter_scharr(image):
+    scharr_x = cv2.Scharr(image, cv2.CV_64F, 1, 0)
+    scharr_y = cv2.Scharr(image, cv2.CV_64F, 0, 1)
+    scharr = cv2.magnitude(scharr_x, scharr_y)
+    return cv2.convertScaleAbs(scharr)
+
+
+def high_pass_filter_prewitt(image):
+    kernelx = np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]], dtype=np.float32)
+    kernely = np.array([[1, 1, 1], [0, 0, 0], [-1, -1, -1]], dtype=np.float32)
+
+    prewitt_x = cv2.filter2D(image, cv2.CV_64F, kernelx)
+    prewitt_y = cv2.filter2D(image, cv2.CV_64F, kernely)
+
+    prewitt = cv2.magnitude(prewitt_x, prewitt_y)
+    return cv2.convertScaleAbs(prewitt)

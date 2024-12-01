@@ -1,5 +1,18 @@
-from modules.filters.lowPassFilter import low_pass_filter_gaussian,low_pass_filter_mean, low_pass_filter_box,low_pass_filter_bilateral,low_pass_filter_furie,low_pass_filter_wiener,low_pass_filter_morf_smooth,low_pass_filter_bessel
-from modules.filters.hightPassFilter import high_pass_filter_laplacian,high_pass_filter_gradient, high_pass_filter_sobel, high_pass_filter_unsharp_mask
+from modules.filters.lowPassFilter import (
+    low_pass_filter_gaussian, low_pass_filter_mean, low_pass_filter_box,
+    low_pass_filter_bilateral, low_pass_filter_furie, low_pass_filter_wiener,
+    low_pass_filter_morf_smooth, low_pass_filter_bessel
+)
+from modules.filters.hightPassFilter import (
+    high_pass_filter_laplacian, high_pass_filter_gradient,
+    high_pass_filter_sobel, high_pass_filter_unsharp_mask,
+    high_pass_filter_laplacian_second_order,
+    high_pass_filter_scharr,
+    high_pass_filter_prewitt
+)
+from modules.filters.bandPassFilter import (
+    butterworth_bandpass_filter
+)
 # лучше поменять подход - много мест где надо дублировать/ошибаемся
 # +псомотреть как работают импорт файлы чтоб тут избавится от полотна импортов
 #не забывать докидывать модули
@@ -19,12 +32,19 @@ filter_map = {
     "Собель": (high_pass_filter_sobel, {'kernel_size': 3}),
     "Unsharp Masking": (high_pass_filter_unsharp_mask, {'sigma': 1.0, 'strength': 1.5}),
     "Градиентный фильтр": (high_pass_filter_gradient, {'kernel_size': 3}),
+    "Лапласиан второго порядка": (high_pass_filter_laplacian_second_order, {'kernel_size': 3}),
+    "Шарр": (high_pass_filter_scharr, {}),
+    "Превитт": (high_pass_filter_prewitt, {}),
+
+    # Полосовые фильтры
+    "Полосовой фильтр Баттерворта": (butterworth_bandpass_filter, {'low_cutoff': 10, 'high_cutoff': 30, 'order': 2}),
+
 }
 # затычка селектов под вильтры
 filter_names = ["НЧ фильтр", "ВЧ фильтр", "Полосовой фильтр", "Сегментация"]
 
 # Опции фильтров для выпадающего списка (можно переделать под ключи объекта )
-filter_options =  {
+filter_options = {
     "НЧ фильтр": [
         "Гауссовый фильтр",
         "Среднее значение",
@@ -39,13 +59,16 @@ filter_options =  {
         "Лапласиан",
         "Собель",
         "Unsharp Masking",
-        "Градиентный фильтр"
+        "Градиентный фильтр",
+        "Лапласиан второго порядка",
+        "Шарр",
+        "Превитт"
     ],
-    "Полосовой фильтр": [
-       "Затычка ",
-        "Затычка ",
-    ],
-     "Сегментация": [
-     "Затычка "
+     "Полосовой фильтр": [
+    "Полосовой фильтр Баттерворта"
+],
+
+    "Сегментация": [
+        "Затычка"
     ]
 }
